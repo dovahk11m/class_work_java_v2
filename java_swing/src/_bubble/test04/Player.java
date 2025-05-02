@@ -1,4 +1,4 @@
-package _bubble.test02;
+package _bubble.test04;
 
 import javax.swing.*;
 
@@ -27,13 +27,100 @@ public class Player extends JLabel implements Movable {
     private boolean up;
     private boolean down;
 
+    //벽에 충돌한 상태
+    private boolean leftWallCrash;
+    private boolean rightWallCrash;
+
     //세터 setter
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
+
+    public void setPlayerR(ImageIcon playerR) {
+        this.playerR = playerR;
+    }
+
+    public void setPlayerL(ImageIcon playerL) {
+        this.playerL = playerL;
+    }
+
     public void setLeft(boolean left) {
         this.left = left;
     }
 
     public void setRight(boolean right) {
         this.right = right;
+    }
+
+    public void setUp(boolean up) {
+        this.up = up;
+    }
+
+    public void setDown(boolean down) {
+        this.down = down;
+    }
+
+    public void setLeftWallCrash(boolean leftWallCrash) {
+        this.leftWallCrash = leftWallCrash;
+    }
+
+    public void setRightWallCrash(boolean rightWallCrash) {
+        this.rightWallCrash = rightWallCrash;
+    }
+
+    //게터 getter
+    @Override
+    public int getX() {
+        return x;
+    }
+
+    @Override
+    public int getY() {
+        return y;
+    }
+
+    public ImageIcon getPlayerR() {
+        return playerR;
+    }
+
+    public ImageIcon getPlayerL() {
+        return playerL;
+    }
+
+    public int getSPEED() {
+        return SPEED;
+    }
+
+    public int getJUMP_SPEED() {
+        return JUMP_SPEED;
+    }
+
+    public boolean isLeft() {
+        return left;
+    }
+
+    public boolean isRight() {
+        return right;
+    }
+
+    public boolean isUp() {
+        return up;
+    }
+
+    public boolean isDown() {
+        return down;
+    }
+
+    public boolean isLeftWallCrash() {
+        return leftWallCrash;
+    }
+
+    public boolean isRightWallCrash() {
+        return rightWallCrash;
     }
 
     //생성자
@@ -56,6 +143,7 @@ public class Player extends JLabel implements Movable {
     }
 
     private void setInitLayout() {
+
 
         //라벨의 사이즈
         setSize(50, 50);
@@ -184,10 +272,8 @@ public class Player extends JLabel implements Movable {
                 //상태값을 잘 다뤄야 버그가 없다.
                 down = false;
 
-            }//run
-
+            }
         }).start();
 
-    }//down
-
-}//end of Player
+    }
+}

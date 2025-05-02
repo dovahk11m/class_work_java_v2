@@ -1,12 +1,11 @@
-package _bubble.test02;
+package _bubble.test05;
 
 import javax.swing.*;
 
 /**
- * 5.1
- * 플레이어 클래스 설계
- * Player 클래스가 컴포넌트로 들어가게 하려면
- * JLabel을 상속해줘야 한다.
+ 5.2
+ 플레이어 클래스
+
  */
 public class Player extends JLabel implements Movable {
 
@@ -27,14 +26,12 @@ public class Player extends JLabel implements Movable {
     private boolean up;
     private boolean down;
 
-    //세터 setter
-    public void setLeft(boolean left) {
-        this.left = left;
-    }
+    //벽에 충돌한 상태
+    private boolean leftWallCrash;
+    private boolean rightWallCrash;
 
-    public void setRight(boolean right) {
-        this.right = right;
-    }
+    //플레이어 방향 상태
+    private PlayerWay playerWay;
 
     //생성자
     public Player() {
@@ -53,9 +50,11 @@ public class Player extends JLabel implements Movable {
         right = false;
         up = false;
         down = false;
-    }
+
+    }//initData
 
     private void setInitLayout() {
+
 
         //라벨의 사이즈
         setSize(50, 50);
@@ -65,10 +64,14 @@ public class Player extends JLabel implements Movable {
 
         //라벨의 위치를 지정
         setLocation(x, y);
-    }
+
+    }//setInitLayout
 
     @Override
     public void left() {
+
+        //클래스 이름으로 접근
+        playerWay = PlayerWay.LEFT;
 
         left = true;
 
@@ -95,6 +98,9 @@ public class Player extends JLabel implements Movable {
 
     @Override
     public void right() {
+
+        //클래스 이름으로 접근
+        playerWay = PlayerWay.RIGHT;
 
         //움직임 상태 변경
         right = true;
@@ -184,10 +190,105 @@ public class Player extends JLabel implements Movable {
                 //상태값을 잘 다뤄야 버그가 없다.
                 down = false;
 
-            }//run
-
+            }
         }).start();
 
     }//down
+
+    //게터 getter
+    public PlayerWay getPlayerWay() {
+        return playerWay;
+    }
+
+    @Override
+    public int getX() {
+        return x;
+    }
+
+    @Override
+    public int getY() {
+        return y;
+    }
+
+    public ImageIcon getPlayerR() {
+        return playerR;
+    }
+
+    public ImageIcon getPlayerL() {
+        return playerL;
+    }
+
+    public int getSPEED() {
+        return SPEED;
+    }
+
+    public int getJUMP_SPEED() {
+        return JUMP_SPEED;
+    }
+
+    public boolean isLeft() {
+        return left;
+    }
+
+    public boolean isRight() {
+        return right;
+    }
+
+    public boolean isUp() {
+        return up;
+    }
+
+    public boolean isDown() {
+        return down;
+    }
+
+    public boolean isLeftWallCrash() {
+        return leftWallCrash;
+    }
+
+    public boolean isRightWallCrash() {
+        return rightWallCrash;
+    }
+
+    //세터 setter
+    public void setX(int x) {
+        this.x = x;
+    }
+
+    public void setY(int y) {
+        this.y = y;
+    }
+
+    public void setPlayerR(ImageIcon playerR) {
+        this.playerR = playerR;
+    }
+
+    public void setPlayerL(ImageIcon playerL) {
+        this.playerL = playerL;
+    }
+
+    public void setLeft(boolean left) {
+        this.left = left;
+    }
+
+    public void setRight(boolean right) {
+        this.right = right;
+    }
+
+    public void setUp(boolean up) {
+        this.up = up;
+    }
+
+    public void setDown(boolean down) {
+        this.down = down;
+    }
+
+    public void setLeftWallCrash(boolean leftWallCrash) {
+        this.leftWallCrash = leftWallCrash;
+    }
+
+    public void setRightWallCrash(boolean rightWallCrash) {
+        this.rightWallCrash = rightWallCrash;
+    }
 
 }//end of Player

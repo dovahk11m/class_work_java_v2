@@ -1,4 +1,5 @@
-package _bubble.test01;
+package _bubble.test04;
+
 /**
  * 5.1
  * 캐릭터의 동작을
@@ -14,4 +15,5 @@ public interface Movable {
     void up();
 
     void down();
+
 }

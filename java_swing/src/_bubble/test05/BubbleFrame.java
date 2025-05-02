@@ -1,13 +1,13 @@
-package _my.bubble;
+package _bubble.test05;
 /**
- * 5.2
- * 오늘은 물방울을 발사할거야
- *
- * 물방울은 객체가 돼야해
- * 프레임에 컴퍼넌트로 들어와야 해
- *
- * JLabel로 만들어본다.
- *
+ 5.2
+ 오늘은 물방울을 발사할거야
+
+ 물방울은 객체가 돼야해
+ 프레임에 컴퍼넌트로 들어와야 해
+
+ JLabel로 만들어본다.
+
  */
 
 import javax.swing.*;
@@ -137,7 +137,6 @@ public class BubbleFrame extends JFrame {
                         add(new Bubble(player));
 
                         break;
-
                 }//switch 조건문
 
             }//keyReleased 오버라이드

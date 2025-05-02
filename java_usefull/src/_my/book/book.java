@@ -1,5 +1,6 @@
 package _my.book;
 
+import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -336,36 +337,56 @@ public class book {
 //        }
 
         int[][] a = new int[3][5];
-        int count =  0;
+        int count = 0;
 
-                for (int i = 0; i < a.length; i++) {
-            for (int j = 0; j < a[i].length; j++ ) {
+        for (int i = 0; i < a.length; i++) {
+            for (int j = 0; j < a[i].length; j++) {
                 a[i][j] = 0;
             }
         }
+
 
         for (int i = 0; i < 5; i++) {
             int ran1 = random.nextInt(3);
             int ran2 = random.nextInt(5);
             a[ran1][ran2] = 1;
 
+//TODO 중복방지 어떻게 하지
+
         }
 
-        for (int i = 0; i < a.length; i++) {
-            for (int j = 0; j < a[i].length; j++ ) {
+        while (true) {
 
-                System.out.print(a[i][j]);
+            for (int i = 0; i < a.length; i++) {
+                for (int j = 0; j < a[i].length; j++) {
+                    count += a[i][j];
+                }
+            }
 
-            }//j
-            System.out.println();
-        }//i
+            if (count < 5) {
+
+                int ran1 = random.nextInt(3);
+                int ran2 = random.nextInt(5);
+
+                a[ran1][ran2] = 1;
+
+            } else {
+
+                for (int i = 0; i < a.length; i++) {
+                    for (int j = 0; j < a[i].length; j++ ) {
+
+                        System.out.print(a[i][j]);
+
+                    }//j
+                    System.out.println();
+                }//i
 
 
 
+                break;
+            }
 
-
-
-
+        }
 
 
 

@@ -10,17 +10,20 @@ import javax.swing.*;
  */
 public class Player extends JLabel implements Movable{
 
+    //멤버변수
     private int x;
     private int y;
 
     private ImageIcon playerR, playerL;
     //private ImageIcon playerL;
 
+    //생성자
     public Player() {
         initData();
         setInitLayout();
     }
 
+    //메서드
     private void initData() {
         playerR = new ImageIcon("img/playerR.png");
         playerL = new ImageIcon("img/playerL.png");
@@ -58,6 +61,5 @@ public class Player extends JLabel implements Movable{
 
     @Override
     public void down() {
-
     }
-}
+}//Player

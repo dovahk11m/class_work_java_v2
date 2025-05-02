@@ -1,4 +1,4 @@
-package _my.bubble;
+package _bubble.test04;
 /**
  * 5.2
  * 오늘은 물방울을 발사할거야
@@ -9,7 +9,6 @@ package _my.bubble;
  * JLabel로 만들어본다.
  *
  */
-
 import javax.swing.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
@@ -137,7 +136,6 @@ public class BubbleFrame extends JFrame {
                         add(new Bubble(player));
 
                         break;
-
                 }//switch 조건문
 
             }//keyReleased 오버라이드
