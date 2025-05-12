@@ -28,6 +28,5 @@ public class GenericBoxDemo {
         doubleBox.setMaterial(0.4321);
         doubleBox.toString();
 
-    }
-
-}
+    }//main
+}//class

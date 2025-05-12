@@ -1,4 +1,4 @@
-package _bubble.test06;
+package _bubble.test07;
 
 import javax.swing.*;
 
@@ -27,8 +27,9 @@ public class Bubble extends JLabel implements Movable {
     private int x;
     private int y;
 
-    //기본 물방울 이미지 변수
+    //물방울 이미지 변수
     private ImageIcon bubble;
+    private ImageIcon bomb; // 터졌을때
 
     //물방울 움직임 상태를 나타내는 제어변수
     private boolean left;
@@ -41,16 +42,17 @@ public class Bubble extends JLabel implements Movable {
 
     //Player 클래스 변수
     private Player player;
+    private BackgroundBubbleService backgroundBubbleService;
 
     //생성자
     public Bubble(Player player) {
         //Player 객체의 주소값을 주입받는다 = 생성자 의존 주입
         this.player = player;
+        this.backgroundBubbleService = new BackgroundBubbleService(this);
 
         initData();
         setInitLayout();
         bubbleStartThread();
-        //버블은 쓰레드를 하나만 배정한다.
 
     }//constructor
 
@@ -76,6 +78,7 @@ public class Bubble extends JLabel implements Movable {
     private void initData() {
 
         bubble = new ImageIcon("img/bubble.png");
+        bomb = new ImageIcon("img/bomb.png");
 
         //초기상태
         left = false;
@@ -92,6 +95,7 @@ public class Bubble extends JLabel implements Movable {
         y = player.getY();
 
         setIcon(bubble);
+
         setSize(50, 50);
 
         //위치는 player 좌표
@@ -100,27 +104,34 @@ public class Bubble extends JLabel implements Movable {
 
     }//setInitLayout
 
-    @Override
-    public void left() {
+        @Override
+        public void left() {
 
-        left = true;
+    //        new Thread().start(); 여기서는 쓰레드를 활용하지 않는다
 
-        for (int i = 0; i < 400; i++) {
+            left = true;
 
-            x--;
-            setLocation(x, y);
+            for (int i = 0; i < 400; i++) {
 
-            try {
-                Thread.sleep(1); //메인쓰레드가 수행
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
+                x--;
+                setLocation(x, y);
 
-        }//for
+                if (backgroundBubbleService.leftWall()) {
+                    //왼쪽벽일때
+                    break;
+                }
 
-        up(); //수평이동을 마친 뒤 위로 올라간다
+                try {
+                    Thread.sleep(1); //메인쓰레드가 수행
+                } catch (InterruptedException e) {
+                    throw new RuntimeException(e);
+                }
 
-    }//left
+            }//for
+
+            up(); //수평이동을 마친 뒤 위로 올라간다
+
+        }//left
 
     @Override
     public void right() {
@@ -130,7 +141,18 @@ public class Bubble extends JLabel implements Movable {
         for (int i = 0; i < 400; i++) {
 
             x++;
+
+            /*
+            좌표 오른쪽으로 1 움직였다.
+            오른쪽 벽인지 매번 확인하는 구문을 넣어보자
+             */
+
             setLocation(x, y);
+
+            if (backgroundBubbleService.rightWall()) {
+                //오른쪽벽일때
+                break;
+            }
 
             try {
                 Thread.sleep(1);
@@ -154,6 +176,15 @@ public class Bubble extends JLabel implements Movable {
             y--;
             setLocation(x, y);
 
+            if (backgroundBubbleService.ceilingBlue()) {
+                //파란천장일때
+                break;
+            }
+            if (backgroundBubbleService.ceilingRed()) {
+                //빨간천장일때
+                break;
+            }
+
             try {
                 Thread.sleep(1);
             } catch (InterruptedException e) {
@@ -161,6 +192,22 @@ public class Bubble extends JLabel implements Movable {
             }
 
         }//while
+
+        //3초 뒤에 이미지를 변경한다.
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        this.setIcon(bomb);
+
+        //0.5초 뒤에 이미지를 없앤다.
+        try {
+            Thread.sleep(500);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        this.setIcon(null);
 
     }//up
 

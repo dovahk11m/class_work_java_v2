@@ -1,4 +1,4 @@
-package _my.bubble;
+package _bubble.test07;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -48,6 +48,37 @@ public class BackgroundPlayerService implements Runnable {
 //            System.out.println("오른쪽 벽 확인:"+rightColor);
 
             /*
+            바닥 감지 기능 개발
+            하얀색이라면?
+            255,255,255 -> 16진수 -> -1
+            image.getRGB 호출
+
+             */
+            int bottomColorLeft = image.getRGB(player.getX() +10, player.getY() + 55);
+            int bottomColorRight = image.getRGB(player.getX() + 50, player.getY() + 55);
+
+            /*
+            -1이라면 바닥으로 떨어져야 하고 아니라면 멈춘다.
+            멈추는 경우는 빨간색, 파란색
+             */
+
+            if (bottomColorLeft + bottomColorRight != -2) {
+                player.setDown(false);
+            } else {
+
+                /*
+                점프하는 순간 bottomColor 값이 -1이 되기 때문에
+                바로 player.down() 메서드가 호출된다.
+                 */
+//                player.down();
+                if (player.isUp() == false && player.isDown() == false) {
+                    player.down();
+                }
+            }
+
+            /*
+            벽 감지 기능 개발
+
             플레이어의 좌표값에 따라
             빨간색, 파란색, 하얀색을 구분할 수 있다.
 
@@ -58,7 +89,6 @@ public class BackgroundPlayerService implements Runnable {
 
             if (leftColor.getRed() == 255 && leftColor.getGreen() == 0 && leftColor.getBlue() == 0) {
                 //RGB 255,0,0 빨간색으로 판별 = 왼쪽벽에 충돌했다.
-                System.out.println("왼쪽 벽에 충돌");
 
                 //왼쪽 벽 충돌 판정
                 player.setLeftWallCrash(true);
@@ -69,7 +99,6 @@ public class BackgroundPlayerService implements Runnable {
 
             } else if (rightColor.getRed() == 255 && rightColor.getGreen() == 0 && rightColor.getBlue() == 0) {
                 //RGB 255,0,0 빨간색으로 판별 = 오른쪽벽에 충돌했다.
-                System.out.println("오른쪽 벽에 충돌");
 
                 //오른쪽 벽 충돌 판정
                 player.setRightWallCrash(true);

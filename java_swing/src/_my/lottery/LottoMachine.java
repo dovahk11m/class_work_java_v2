@@ -1,4 +1,4 @@
-package _my;
+package _my.lottery;
 
 import javax.swing.*;
 import java.awt.*;

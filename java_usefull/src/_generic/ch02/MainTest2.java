@@ -1,5 +1,4 @@
 package _generic.ch02;
-
 public class MainTest2 {
 
     public static void main(String[] args) {
@@ -11,7 +10,7 @@ public class MainTest2 {
         //사용하는 시점에 T 대신 어떤 자료형을 사용할 지 지정해준다.
         GenericPrinter<Plastic> gPrinter1 = new GenericPrinter<>();
         gPrinter1.setMaterial(plastic1);
-        System.out.println(gPrinter1.toString());
+        System.out.println(gPrinter1.toString()); // "재료는 플라스틱 입니다."
 
         //재료꺼내기
         Plastic usePlastic = gPrinter1.getMaterial(); //형변환이 필요없다
@@ -29,10 +28,7 @@ public class MainTest2 {
         Water water1 = new Water();
         GenericPrinter<Water> gPrinter2 = new GenericPrinter<>();
         gPrinter2.setMaterial(water1);
-        System.out.println(gPrinter2.toString());
+        System.out.println(gPrinter2.toString()); // "재료는 물 입니다."
 
-
-
-
-    }
-}
+    }//main
+}//class

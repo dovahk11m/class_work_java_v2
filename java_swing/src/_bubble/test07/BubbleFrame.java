@@ -1,13 +1,12 @@
-package _my.bubble;
+package _bubble.test07;
 /**
  * 5.2
  * 오늘은 물방울을 발사할거야
- *
+ * <p>
  * 물방울은 객체가 돼야해
  * 프레임에 컴퍼넌트로 들어와야 해
- *
+ * <p>
  * JLabel로 만들어본다.
- *
  */
 
 import javax.swing.*;
@@ -32,10 +31,10 @@ public class BubbleFrame extends JFrame {
     //메서드
     private void initData() {
         setTitle("버블게임");
-        setSize(1000,640);
+        setSize(1000, 640);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        backgroundMap = new JLabel((new ImageIcon("img/backgroundMap.png")));
+        backgroundMap = new JLabel((new ImageIcon("img/backgroundMapService.png")));
         //루트패널에 JLabel 넣기
 
         setContentPane(backgroundMap);
@@ -59,6 +58,7 @@ public class BubbleFrame extends JFrame {
         //맨 마지막
         setVisible(true);
     }
+
     /*
     키보드 동작은
     라벨보다는
@@ -105,7 +105,15 @@ public class BubbleFrame extends JFrame {
                         break;
 
                     case KeyEvent.VK_UP:
-                        player.up();
+                        /*
+                        만약 점프 상태가 아니었다면 up() 수행해
+                        만약 낙하 상태가 아니었다면 up() 수행해
+                         */
+                        if (player.isUp() == false && player.isDown() == false) {
+                            System.out.println("점프 버튼 가동");
+                            player.up();
+                        }
+
                         break;
                 }
             }
@@ -137,7 +145,6 @@ public class BubbleFrame extends JFrame {
                         add(new Bubble(player));
 
                         break;
-
                 }//switch 조건문
 
             }//keyReleased 오버라이드

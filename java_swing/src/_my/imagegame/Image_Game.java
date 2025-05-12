@@ -1,4 +1,4 @@
-package _my;
+package _my.imagegame;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;

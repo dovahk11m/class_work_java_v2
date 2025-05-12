@@ -1,4 +1,4 @@
-package _my;
+package _my.lottery;
 
 /**
  * 로또 머신 연습

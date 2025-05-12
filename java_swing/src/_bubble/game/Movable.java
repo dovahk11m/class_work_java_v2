@@ -1,10 +1,4 @@
-package _my.bubble;
-
-/**
- * 5.1
- * 캐릭터의 동작을
- * 인터페이스로 정의한다.
- */
+package _bubble.game;
 public interface Movable {
 
     //public abstract 생략 가능
@@ -14,6 +8,8 @@ public interface Movable {
 
     void up();
 
-    void down();
+    default void down() {};
+
+//    default void aaa() {};
 
 }

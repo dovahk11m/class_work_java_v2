@@ -1,9 +1,5 @@
 package _generic.ch03;
-/**
- 5.8
- */
 public class MainTest3 {
-
     public static void main(String[] args) {
 
         //재료 선언

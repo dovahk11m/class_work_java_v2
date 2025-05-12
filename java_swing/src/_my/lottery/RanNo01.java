@@ -1,4 +1,4 @@
-package _my;
+package _my.lottery;
 
 import java.util.Arrays;
 import java.util.Random;
