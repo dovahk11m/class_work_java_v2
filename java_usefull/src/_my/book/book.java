@@ -336,57 +336,59 @@ public class book {
 //            System.out.println();
 //        }
 
-        int[][] a = new int[3][5];
-        int count = 0;
+//        int[][] a = new int[3][5];
+//        int count = 0;
+//
+//        for (int i = 0; i < a.length; i++) {
+//            for (int j = 0; j < a[i].length; j++) {
+//                a[i][j] = 0;
+//            }
+//        }
+//
+//
+//        for (int i = 0; i < 5; i++) {
+//            int ran1 = random.nextInt(3);
+//            int ran2 = random.nextInt(5);
+//            a[ran1][ran2] = 1;
+//
+////TODO 중복방지 어떻게 하지
+//
+//        }
+//
+//        while (true) {
+//
+//            for (int i = 0; i < a.length; i++) {
+//                for (int j = 0; j < a[i].length; j++) {
+//                    count += a[i][j];
+//                }
+//            }
+//
+//            if (count < 5) {
+//
+//                int ran1 = random.nextInt(3);
+//                int ran2 = random.nextInt(5);
+//
+//                a[ran1][ran2] = 1;
+//
+//            } else {
+//
+//                for (int i = 0; i < a.length; i++) {
+//                    for (int j = 0; j < a[i].length; j++ ) {
+//
+//                        System.out.print(a[i][j]);
+//
+//                    }//j
+//                    System.out.println();
+//                }//i
+//
+//
+//
+//                break;
+//            }
+//
+//        }
 
-        for (int i = 0; i < a.length; i++) {
-            for (int j = 0; j < a[i].length; j++) {
-                a[i][j] = 0;
-            }
-        }
 
-
-        for (int i = 0; i < 5; i++) {
-            int ran1 = random.nextInt(3);
-            int ran2 = random.nextInt(5);
-            a[ran1][ran2] = 1;
-
-//TODO 중복방지 어떻게 하지
-
-        }
-
-        while (true) {
-
-            for (int i = 0; i < a.length; i++) {
-                for (int j = 0; j < a[i].length; j++) {
-                    count += a[i][j];
-                }
-            }
-
-            if (count < 5) {
-
-                int ran1 = random.nextInt(3);
-                int ran2 = random.nextInt(5);
-
-                a[ran1][ran2] = 1;
-
-            } else {
-
-                for (int i = 0; i < a.length; i++) {
-                    for (int j = 0; j < a[i].length; j++ ) {
-
-                        System.out.print(a[i][j]);
-
-                    }//j
-                    System.out.println();
-                }//i
-
-
-
-                break;
-            }
-
-        }
 
 
 
