@@ -9,6 +9,7 @@ public class StreamTest {
 //             BufferedReader br = new BufferedReader(isr);
 //             FileWriter writer = new FileWriter(destinationFilePath, true);
 //             BufferedWriter bw = new BufferedWriter(writer)
+
                 BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
                 BufferedWriter bw = new BufferedWriter(new FileWriter(destinationFilePath, true))
         ) {

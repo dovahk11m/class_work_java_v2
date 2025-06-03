@@ -4,7 +4,6 @@ import java.io.*;
 
 /* 5.30 */
 public class CharBufferedKeyboardConsole {
-
     public static void main(String[] args) {
 
         /* InputStreamReader 는 System.in(InputStream) 을 기반으로 한다.
@@ -36,7 +35,6 @@ public class CharBufferedKeyboardConsole {
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("스트림 사용중 오류 발생:" + e.getMessage());
-        }
-
+        }//t-c
     }//main
 }//class
