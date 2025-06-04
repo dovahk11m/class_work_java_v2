@@ -6,71 +6,69 @@ import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.util.Vector;
 
 public class Server {
-    public static void main(String[] args) {
-        System.out.println("== 서버 실행 ==");
-        ServerSocket serverSocket = null;
-        Socket clientSocket = null;
 
-        try {
-            serverSocket = new ServerSocket(5000);
-            clientSocket = serverSocket.accept();
-            System.out.println("== 클라이언트 연결 ==");
+    private static final int PORT = 5000;
+    private static Vector<PrintWriter> printWriterVector = new Vector<>();
+    public static int connectedCounter;
 
-            BufferedReader keyReader = new BufferedReader(new InputStreamReader(System.in));
-            PrintWriter streamwriter = new PrintWriter(clientSocket.getOutputStream(), true);
-            BufferedReader streamReader = new BufferedReader(new InputStreamReader(clientSocket.getInputStream()));
+    public static class ClientHandler extends Thread {
+        private Socket socket;
+        BufferedReader in;
+        PrintWriter out;
 
-            Thread keyThread = new Thread(() -> {
-                try {
-                    String message;
-                    while ((message = keyReader.readLine()) != null) {
-                        streamwriter.println(message);
-                        streamwriter.flush();
-                    }
+        public ClientHandler(Socket socket) {
+            this.socket = socket;
+        }
 
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    System.out.println("== 메시지 전송중 오류 발생 ==");
-                }
-            } );
-            Thread readThread = new Thread(() -> {
-                System.out.println("== readThread 시작 ==");
-                try {
-                  String message;
-                    while ((message = streamReader.readLine()) != null) {
-                        if ("exit".equalsIgnoreCase(message)) {
-                            System.out.println("== 클라이언트 채팅 종료 ==");
-                            break;
-                        }
-                        System.out.println("클:"+message);
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    System.out.println("== 데이터 읽는중 클라이언트 연결 종료==");
-                }
-            } );
-            keyThread.start();
-            readThread.start();
-            System.out.println("== 쓰레드 시작 ==");
+        @Override
+        public void run() {
 
-            keyThread.join();
-            readThread.join();
-
-        } catch (IOException | InterruptedException e) {
-            e.printStackTrace();
-            System.out.println("== 서버 실행 오류: 포트 사용여부 확인 ==");
-
-        }finally {
             try {
-                if (clientSocket != null) clientSocket.close();
-                if( serverSocket != null) serverSocket.close();
+                in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+                out = new PrintWriter(socket.getOutputStream(), true);
+
+                printWriterVector.add(out);
+
+                String message;
+                while ((message = in.readLine()) != null) {
+                    System.out.println("수신:" + message);
+
+                    for (PrintWriter writer : printWriterVector) {
+                            writer.println("방송:" + message);
+                    }
+                }//while
+
             } catch (IOException e) {
                 e.printStackTrace();
-                System.out.println("== 자원해제 중 오류 발생 ==");
+                System.out.println("소켓 연결중 오류 발생");
+            } finally {
+                try {
+                    if (socket != null) socket.close();
+                    printWriterVector.remove(out);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    System.out.println("소켓 자원해제중 오류 발생");
+                }
+            }//tcf
+        }//run
+    }//ClientHandler
 
-            }
-        }//finally
+    public static void main(String[] args) {
+        System.out.println("== 서버 시작 ==");
+
+        try (ServerSocket serverSocket = new ServerSocket(PORT)){
+
+            while (true) {
+                new ClientHandler(serverSocket.accept()).start();
+                connectedCounter++;
+                System.out.println("클라이언트 연결됨"+connectedCounter);
+            }//while
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }//twr
     }//main
 }//class

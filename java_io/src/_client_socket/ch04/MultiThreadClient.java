@@ -14,7 +14,7 @@ public class MultiThreadClient {
         Socket socket = null;
 
         try {
-            socket = new Socket("192.168.0.137", 5000);
+            socket = new Socket("192.168.0.132", 5000);
             System.out.println("## 서버에 연결 시도 ##");
 
             //서버와 통신을 위한 스트림 준비

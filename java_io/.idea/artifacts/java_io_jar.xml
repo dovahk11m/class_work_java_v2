@@ -1,0 +1,10 @@
+<component name="ArtifactManager">
+  <artifact name="java_io:jar">
+    <output-path>D:/note</output-path>
+    <root id="root">
+      <element id="archive" name="java_io.jar">
+        <element id="module-output" name="java_io" />
+      </element>
+    </root>
+  </artifact>
+</component>

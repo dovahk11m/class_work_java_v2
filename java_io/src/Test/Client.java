@@ -7,62 +7,90 @@ import java.io.PrintWriter;
 import java.net.Socket;
 
 public class Client {
-    public static void main(String[] args) {
-        System.out.println("## 클라이언트 실행 ##");
-        Socket socket = null;
 
-        try {
-            socket = new Socket("localhost", 5000);
-            System.out.println("## 서버에 연결 시도 ##");
+    private final String name;
+    private Socket socket;
+    private PrintWriter writerStream;
+    private BufferedReader readerStream;
+    private BufferedReader keyboardStream;
 
-            PrintWriter streamWiter = new PrintWriter(socket.getOutputStream(), true);
-            BufferedReader streamReader = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-            BufferedReader keyReader = new BufferedReader(new InputStreamReader(System.in));
+    public Client(String name) {
+        this.name = name;
+    }
 
-            Thread readThread = new Thread(() -> {
-                try {
-                    String message;
-                    while ((message = streamReader.readLine()) != null) {
-                        if ("exit".equalsIgnoreCase(message)) {
-                            System.out.println("## 서버측이 채팅을 종료했음 ##");
-                        }
-                        System.out.println("server:" + message);
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    System.out.println("## 서버측에서 채팅 종료 ##");
-                }
-            });
+    private void connectToServer() throws IOException {
+        socket = new Socket("localhost", 5000);
+        System.out.println("## 서버연결 ###");
+    }
 
-            Thread writeThread = new Thread(() -> {
-                try {
-                    String message;
-                    while ((message = keyReader.readLine()) != null) {
-                        streamWiter.println(message);
-                        streamWiter.flush();
-                    }
-                } catch (IOException e) {
-                    e.printStackTrace();
-                    System.out.println("## 메시지 전송 오류 ##");
-                }
-            });
+    private void setupStream() throws IOException {
+        writerStream = new PrintWriter(socket.getOutputStream(), true);
+        readerStream = new BufferedReader(new InputStreamReader(socket.getInputStream()));
+        keyboardStream = new BufferedReader(new InputStreamReader(System.in));
+    }
 
-            readThread.start();
-            writeThread.start();
-
-            readThread.join();
-            writeThread.join();
-
-        } catch (IOException | InterruptedException e) {
-            e.printStackTrace();
-            System.out.println("## 오류 발생.. ##");
-        } finally {
+    private Thread createRead() {
+        return new Thread(() -> {
             try {
-                if (socket != null) socket.close();
+                String serverMessage;
+                while ((serverMessage = readerStream.readLine()) != null) {
+                    System.out.println("서버:"+serverMessage);
+                }
             } catch (IOException e) {
                 e.printStackTrace();
-                System.out.println("## 자원해제중 오류 발생 ##");
             }
-        }//finally
+        } );
+    }
+
+    private Thread createWrite() {
+        return new Thread(() -> {
+            try {
+                String keyboardMessage;
+                while ((keyboardMessage = keyboardStream.readLine()) != null) {
+                    writerStream.println("["+name+"]"+ keyboardMessage);
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        } );
+    }
+
+    private void cleanUp() {
+        try {
+            if (socket != null) socket.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void startCommunication() throws InterruptedException {
+        Thread readThread = createRead();
+        Thread wirteThread = createWrite();
+
+        readThread.start();
+        wirteThread.start();
+
+        readThread.join();
+        wirteThread.join();
+    }
+
+    public void chatRun() {
+        try {
+            connectToServer();
+            setupStream();
+            startCommunication();
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }finally {
+            cleanUp();
+        }
+    }
+
+    public static void main(String[] args) {
+
+        System.out.println("## 클라이언트 시작 ##");
+        Client client = new Client("조충희");
+        client.chatRun();
+
     }//main
 }//class
