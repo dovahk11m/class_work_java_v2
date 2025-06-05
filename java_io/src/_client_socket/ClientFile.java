@@ -19,7 +19,7 @@ public class ClientFile {
         연결하고자 하는 컴퓨터 ip와 포트번호 입력
         만약, 내 컴퓨터에 접근한다면 localhost 사용 가능 */
         try {
-            socket = new Socket("192.168.0.88", 5001);
+            socket = new Socket("192.168.0.137", 5001);
 
             /* 서버로 데이터를 보내기 위한 준비물
             출력스트림 준비 (문자 기반) */
